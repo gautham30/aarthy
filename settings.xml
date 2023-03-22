@@ -1,0 +1,257 @@
+<project application="Reference Architecture" compPrefix="RA"> <!-- application and template are out of date, this is used for branching and load balancer work now -->
+	<components template="Reference Architecture Component">
+	<component name="testing" type="module" sourcetype="github" ra2="true" project="gautham30"/>
+	</components>
+	<!-- Keep loadbalancer and db sections of environments only -->
+	<environments templates="RA Vaults">
+		<environment name="DEV">
+			<loadbalancers>
+              	<loadbalancer name="F5HubNP" ip="10.25.240.238" ip2="10.25.240.238">
+			        <partitions>
+                         <partition name="managed233">
+					        <virtualservers>
+					        </virtualservers>
+					     </partition>
+					 </partitions>
+				</loadbalancer>
+				<loadbalancer name="F5WebDEV" ip="10.25.240.237" url="https://iowacbipvue07.pvue.dcsroot.local/xui/">
+					<partitions name="managed">
+						<partition>
+							<virtualservers>
+								<virtualserver name="dev_assistportal" pool="dev_assistportal_pool_"/>
+							</virtualservers>
+						</partition>
+					</partitions>
+				</loadbalancer>
+			</loadbalancers>	
+			<db tier="DB" name="DB" agent="agent2-bldprd1b-depsvc1">
+				<component name="CandidatePortalServices" project="CPS" dbName="vuedev" changelog="data/migrations/changelog-master-test.xml" />
+				<component name="CAS" project="CAS" dbName="cas" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamResultServices" project="EXAM" dbName="vuedev" changelog="data/migrations/changelog-master.xml" />
+				<component name="ProctorServices" project="ProctorSVCS" dbName="proctor" changelog="data/migrations/changelog-master.xml" />
+				<component name="SchedulerServices" project="Scheduler" dbName="Scheduler" changelog="data/migrations/changelog-master.xml" />
+				<component name="TaxServices" project="TAX" dbName="vtslogging" changelog="data/migrations/changelog-master.xml" />
+				<component name="OrganizationServices" project="ORG" dbName="organization" changelog="data/migrations/changelog-master.xml" />
+				<component name="SoftwareDistributionServices" project="SDS" dbName="softwaredistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamDistributionServices" project="EDS" dbName="ExamDistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="PaymentServices" project="PAYS" dbName="Payment" changelog="data/migrations/changelog-master.xml" />
+			</db>
+			<property name="dbServer">porter.pearsonvue.com</property>
+			<property name="dbServerPort">33508</property>
+		</environment>
+		<environment name="ST1">
+			<loadbalancers>
+				<loadbalancer name="F5HubNP" ip="10.25.240.238" ip2="10.25.240.238">
+					<partitions>
+						<partition name="managed233">
+							<virtualservers>
+								<virtualserver>
+								</virtualserver>
+							</virtualservers>
+						</partition>
+					</partitions>
+				</loadbalancer>
+			</loadbalancers>	
+			<db tier="DB" name="DB" agent="agent2-bldprd1b-depsvc1">
+				<component name="CandidatePortalServices" project="CPS" dbName="vuetest" changelog="data/migrations/changelog-master.xml" />
+				<component name="CAS" project="CAS" dbName="cas" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamResultServices" project="EXAM" dbName="vuetest" changelog="data/migrations/changelog-master.xml" />
+				<component name="ProctorServices" project="ProctorSVCS" dbName="proctor" changelog="data/migrations/changelog-master.xml" />
+				<component name="SchedulerServices" project="Scheduler" dbName="Scheduler" changelog="data/migrations/changelog-master.xml" />
+				<component name="TaxServices" project="TAX" dbName="vtslogging" changelog="data/migrations/changelog-master.xml" />
+				<component name="OrganizationServices" project="ORG" dbName="organization" changelog="data/migrations/changelog-master.xml" />
+				<component name="SoftwareDistributionServices" project="SDS" dbName="softwaredistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamDistributionServices" project="EDS" dbName="ExamDistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="PaymentServices" project="PAYS" dbName="Payment" changelog="data/migrations/changelog-master.xml" />
+			</db>
+			<property name="dbServer">cider.pearsonvue.com</property>
+			<property name="dbServerPort">33508</property>
+		</environment>
+		<environment name="ST2">
+			<loadbalancers>
+				<loadbalancer name="F5Hub" ip="10.25.240.238">
+					<partitions>
+						<partition>
+							<virtualservers>
+								<virtualserver>
+								</virtualserver>
+							</virtualservers>
+						</partition>
+					</partitions>
+				</loadbalancer>
+			</loadbalancers>	
+			<db tier="DB" name="DB" agent="agent2-bldprd1b-depsvc1">
+				<component name="CandidatePortalServices" project="CPS" dbName="vuetest" changelog="data/migrations/changelog-master.xml" />
+				<component name="CAS" project="CAS" dbName="cas" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamResultServices" project="EXAM" dbName="vuetest" changelog="data/migrations/changelog-master.xml" />
+				<component name="ProctorServices" project="ProctorSVCS" dbName="proctor" changelog="data/migrations/changelog-master.xml" />
+				<component name="SchedulerServices" project="Scheduler" dbName="Scheduler" changelog="data/migrations/changelog-master.xml" />
+				<component name="TaxServices" project="TAX" dbName="vtslogging" changelog="data/migrations/changelog-master.xml" />
+				<component name="OrganizationServices" project="ORG" dbName="organization" changelog="data/migrations/changelog-master.xml" />
+				<component name="SoftwareDistributionServices" project="SDS" dbName="softwaredistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamDistributionServices" project="EDS" dbName="ExamDistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="PaymentServices" project="PAYS" dbName="Payment" changelog="data/migrations/changelog-master.xml" />
+			</db>
+			<property name="dbServer">malibu.pearsonvue.com</property>
+			<property name="dbServerPort">33508</property>
+		</environment>
+		<environment name="CTT">
+			<loadbalancers> <!-- ip and ip2 set to same address for CTT Hub as there is not a passive node. -->
+              	<!-- Commenting out hub as we never want to flip these pools according to Gene 20190904 
+				<loadbalancer name="F5HubNP" ip="10.25.240.238" ip2="10.25.240.238" url="https://iowacbipvue07.pvue.dcsroot.local/xui/">
+                  	<partitions>
+						<partition name="managed">
+							<virtualservers>
+                  				<virtualserver name="ctt_fms" pool="ctt_fms_pool_" />
+                              	<virtualserver name="ctt_fms2" pool="ctt_fms_pool_" /> 
+							</virtualservers>
+						</partition>
+                        <partition name="managed233">
+							<virtualservers>
+								<virtualserver name="ctt_appsint" pool="ctt_appsint_pool_" />
+								<virtualserver name="ctt_appsint2" pool="ctt_appsint_pool_" />
+								<virtualserver name="ctt_hubws" pool="ctt_hubws_pool_" />
+								<virtualserver name="ctt_hubws4" pool="ctt_hubws_pool_" />
+								<virtualserver name="ctt_hubws2" pool="ctt_hubws_pool_" /> 
+							</virtualservers>
+						</partition>
+					</partitions>
+      			</loadbalancer> -->
+                <!-- Reference https://one-confluence.pearson.com/pages/viewpage.action?pageId=198218550 -->
+     	  		<loadbalancer name="F5WebCTT" ip="10.25.240.236" ip2="10.25.240.251" url="https://iowacbipvue03.pvue.dcsroot.local/xui/">
+					<partitions> 
+						<partition name="managed">
+							<virtualservers>
+								<!--<virtualserver name="ctt_cw" pool="ctt_cw_pool_" />-->
+								<virtualserver name="ctt_crl" pool="ctt_crl_pool_" />
+								<virtualserver name="ctt_crl_80" pool="ctt_crl_pool_" />
+								<!-- removed <virtualserver name="ctt_dvsa_wsr" pool="ctt_dvsa_wsr_pool_" /> -->
+								<virtualserver name="ctt_mba" pool="ctt_mba_pool_" />
+								<!-- removed <virtualserver name="ctt_mstr" pool="ctt_mstr_pool_" val="true"/> -->
+								<virtualserver name="ctt_wsr" pool="ctt_wsr_pool_" val="true"/>
+								<virtualserver name="ctt_wsr2" pool="ctt_wsr_pool_" />
+								<virtualserver name="ctt_wsr4" pool="ctt_wsr4_pool_" val="true"/>
+								<virtualserver name="ctt_www" pool="ctt_www_pool_" val="true"/>
+								<virtualserver name="ctt_assistportal" pool="ctt_assistportal_pool_" val="true"/>
+								<virtualserver name="ctt_candportal" pool="ctt_candportal_pool_" val="true"/>
+								<virtualserver name="ctt_gatewayportal" pool="ctt_gatewayportal_pool_" val="true"/>
+								<!--<virtualserver name="ctt_connectportal" pool="ctt_connectportal_pool_" val="true"/>-->
+								<virtualserver name="ctt_navigatorportal" pool="ctt_navigatorportal_pool_" val="true" />
+								<!-- removed <virtualserver name="ctt_svc_ibt" pool="ctt_svc_ibt_pool_" val="true"/> -->
+								<virtualserver name="ctt_svc_apps" pool="ctt_svc_apps_pool_" val="true" />
+								<virtualserver name="ctt_svc_appscf" pool="ctt_svc_appscf_pool_" />
+								<virtualserver name="ctt_svc_appsdr" pool="ctt_svc_appsdr_pool_" />
+								<virtualserver name="ctt_svc_ws" pool="ctt_svc_ws_pool_" val="true"/>
+								<virtualserver name="ctt_svc_ws2" pool="ctt_svc_ws_pool_" />
+								<!-- removed <virtualserver name="ctt_webctt_ism" pool="ctt_webctt_ism_pool_" val="true" />-->
+								<virtualserver name="ctt_webctt_getior" pool="ctt_webctt_getior_pool_" val="true"/>
+								<virtualserver name="ctt_gks_gk443" pool="ctt_gks_gk443_pool_" />                              
+							</virtualservers>
+						</partition>
+					</partitions>   
+				</loadbalancer>
+			</loadbalancers>
+
+			<db tier="DB" name="DB" agent="agent2-bldprd1b-depsvc1">
+				<component name="CandidatePortalServices" project="CPS" dbName="vue" changelog="data/migrations/changelog-master-test.xml" />
+				<component name="CAS" project="CAS" dbName="cas" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamResultServices" project="EXAM" dbName="vue" changelog="data/migrations/changelog-master.xml" />
+				<component name="ProctorServices" project="ProctorSVCS" dbName="proctor" changelog="data/migrations/changelog-master.xml" />
+				<component name="SchedulerServices" project="Scheduler" dbName="Scheduler" changelog="data/migrations/changelog-master.xml" />
+				<component name="TaxServices" project="TAX" dbName="vtslogging" changelog="data/migrations/changelog-master.xml" />
+				<component name="OrganizationServices" project="ORG" dbName="organization" changelog="data/migrations/changelog-master.xml" />
+				<component name="SoftwareDistributionServices" project="SDS" dbName="softwaredistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamDistributionServices" project="EDS" dbName="ExamDistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="PaymentServices" project="PAYS" dbName="Payment" changelog="data/migrations/changelog-master.xml" />
+			</db>
+			<property name="dbServer">jager.pearsonvue.com</property>
+			<property name="dbServerPort">33508</property>
+		</environment>
+
+
+		<environment name="PRD">
+				<loadbalancers>
+                    <!-- Commenting out hub as we never want to flip these pools according to Gene 20190904
+        	        <loadbalancer name="F5HubPRD" ip="10.25.240.235" ip2="10.25.240.252">
+			            <partitions>
+                             <partition name="managed">
+							        <virtualservers>
+								        <virtualserver name="prd_appsint" pool="prd_appsint_pool_" />
+								        <virtualserver name="prd_appsint2" pool="prd_appsint_pool_" />
+								        <virtualserver name="prd_fms" pool="prd_fms_pool_" />
+								        <virtualserver name="prd_fms2" pool="prd_fms_pool_" />
+								        <virtualserver name="prd_hubws2" pool="prd_hubws_pool_" />
+								        <virtualserver name="prd_hubws3" pool="prd_hubws_pool_" />
+							        </virtualservers>
+						     </partition>
+						 </partitions>
+					 </loadbalancer>
+					 -->
+                     <!-- Reference https://one-confluence.pearson.com/pages/viewpage.action?pageId=198218550 -->
+					 <loadbalancer name="F5WebPRD" ip="10.25.240.230" ip2="10.25.240.229">
+						 <partitions>
+						       <partition name="managed">
+								     <virtualservers>
+								         <!--<virtualserver name="prd_cw" pool="prd_cw_pool_" />-->
+								         <!--virtualserver name="prd_cwi" pool="prd_cwi_pool_" />-->
+								         <virtualserver name="prd_crl" pool="prd_crl_pool_" />
+								         <virtualserver name="prd_crl_80" pool="prd_crl_pool_" />
+								         <!-- removed <virtualserver name="prd_dvsa_wsr" pool="prd_dvsa_wsr_pool_" /> -->
+								         <virtualserver name="prd_mba" pool="prd_mba_pool_" />
+								         <!-- removed <virtualserver name="prd_mstr" pool="prd_mstr_pool_" val="true"/> -->
+								         <virtualserver name="prd_wsr" pool="prd_wsr_pool_" val="true"/>
+								         <virtualserver name="prd_wsr2" pool="prd_wsr_pool_" />
+								         <virtualserver name="prd_wsr3" pool="prd_wsr3_pool_" val="true"/>
+								         <!-- removed <virtualserver name="prd_wsr4" pool="prd_wsr4_pool_" />-->
+								         <virtualserver name="prd_www" pool="prd_www_pool_" val="true"/>
+								         <virtualserver name="prd_www_new" pool="prd_www_pool_" />
+								         <virtualserver name="prd_assistportal" pool="prd_assistportal_pool_" val="true"/>
+								         <virtualserver name="prd_candportal" pool="prd_candportal_pool_" val="true"/>
+								         <virtualserver name="prd_gatewayportal" pool="prd_gatewayportal_pool_" val="true"/>
+								         <!-- removed <virtualserver name="prd_connectportal" pool="prd_connectportal_pool_" val="true"/>-->
+								         <virtualserver name="prd_navigatorportal" pool="prd_navigatorportal_pool_" val="true" />
+								         <!-- removed <virtualserver name="prd_svc_ibt" pool="prd_svc_ibt_pool_" val="true"/> -->
+								         <virtualserver name="prd_svc_apps" pool="prd_svc_apps_pool_" val="true" />
+								         <!-- removed<virtualserver name="prd_svc_appscf" pool="prd_svc_appscf_pool_" /> -->
+								         <!-- removed<virtualserver name="prd_svc_appsdr" pool="prd_svc_appsdr_pool_" /> -->
+								         <virtualserver name="prd_svc_ws" pool="prd_svc_ws_pool_" val="true"/>
+								         <virtualserver name="prd_svc_ws2" pool="prd_svc_ws_pool_" />
+								         <!--Removing ISM pools <virtualserver name="prd_webprd_ism" pool="prd_webprd_ism_pool_" val="true" />-->
+								         <virtualserver name="prd_webprd_getior" pool="prd_webprd_getior_pool_" val="true"/>
+								         <virtualserver name="prd_gks_gk443" pool="prd_gks_gk443_pool_" />
+								     </virtualservers>
+						      </partition>
+                        </partitions>       
+        	        </loadbalancer>
+                    <!-- Adding special CTT GetIOR pools to be updated during PROD deployment -->                 
+        	        <loadbalancer name="F5WebCTT" ip="10.25.240.236" ip2="10.25.240.251">
+			            <partitions>
+                             <partition name="managed">
+							        <virtualservers>
+								         <virtualserver name="ctt_webctt_getior_gk6clone" pool="ctt_webctt_getior_gk6clone_pool_"/>
+								         <!-- Removing per Myles 20211117 <virtualserver name="ctt_webctt_getiorprod" pool="ctt_webctt_getiorprod_pool_"/> -->
+                                      	 <!-- Removed <virtualserver name="ctt_gksprd_gk443" pool="ctt_gksprd_gk443_pool_" /> -->
+							        </virtualservers>
+						     </partition>
+						 </partitions>
+					 </loadbalancer>
+                     <!-- End of special CTT pools updated during production deploy -->                  
+                 </loadbalancers>
+			<db tier="DB" name="DB" agent="agent2-bldprd1b-depsvc1">
+				<component name="CandidatePortalServices" project="CPS" dbName="vue" changelog="data/migrations/changelog-master-test.xml" />
+				<component name="CAS" project="CAS" dbName="cas" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamResultServices" project="EXAM" dbName="vue" changelog="data/migrations/changelog-master.xml" />
+				<component name="ProctorServices" project="ProctorSVCS" dbName="proctor" changelog="data/migrations/changelog-master.xml" />
+				<component name="SchedulerServices" project="Scheduler" dbName="Scheduler" changelog="data/migrations/changelog-master.xml" />
+				<component name="TaxServices" project="TAX" dbName="vtslogging" changelog="data/migrations/changelog-master.xml" />
+				<component name="OrganizationServices" project="ORG" dbName="organization" changelog="data/migrations/changelog-master.xml" />
+				<component name="SoftwareDistributionServices" project="SDS" dbName="softwaredistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="ExamDistributionServices" project="EDS" dbName="ExamDistribution" changelog="data/migrations/changelog-master.xml" />
+				<component name="PaymentServices" project="PAYS" dbName="Payment" changelog="data/migrations/changelog-master.xml" />
+				<component name="CloudControlServices" project="CCS" dbName="cloudcontrol" changelog="data/migrations/changelog-master.xml" />
+			</db>
+		</environment>
+		<environment name="DR">
+		</environment>
+	</environments>
+</project>
