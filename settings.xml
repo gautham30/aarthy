@@ -1,7 +1,9 @@
 <project application="Reference Architecture" compPrefix="RA"> <!-- application and template are out of date, this is used for branching and load balancer work now -->
 	<components template="Reference Architecture Component">
 	<component name="testing" type="module" sourcetype="github" ra2="true" project="gautham30"/>
+	<component name="testing" type="module" sourcetype="github" ra3="true" project="gautham30"/>
 	</components>
+	
 	<!-- Keep loadbalancer and db sections of environments only -->
 	<environments templates="RA Vaults">
 		<environment name="DEV">
